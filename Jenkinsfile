@@ -41,7 +41,10 @@ pipeline {
                 }
             }
             steps {
-                sh 'goreleaser release --clean'
+                script {
+                    def tag = sh(returnStdout: true, script: 'git tag --points-at HEAD').trim()
+                    sh "GORELEASER_CURRENT_TAG=${tag} goreleaser release --clean"
+                }
             }
         }
     }
