@@ -2,15 +2,16 @@ pipeline {
     agent any
 
     environment {
-        GITHUB_TOKEN = credentials('tuigram-github-token')
-        PATH = "/usr/local/go/bin:${env.PATH}"
+        GITHUB_TOKEN        = credentials('tuigram-github-token')
+        TELEGRAM_BOT_TOKEN  = credentials('telegram-bot-token')
+        TELEGRAM_CHAT_ID    = credentials('telegram-chat-id')
+        PATH                = "/usr/local/go/bin:${env.PATH}"
     }
 
     stages {
         stage('Checkout') {
             steps {
                 checkout scm
-                sh 'git fetch --tags'
             }
         }
 
