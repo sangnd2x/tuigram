@@ -3,6 +3,7 @@ pipeline {
 
     environment {
         GITHUB_TOKEN = credentials('tuigram-github-token')
+        PATH = "/usr/local/go/bin:${env.PATH}"
     }
 
     stages {
