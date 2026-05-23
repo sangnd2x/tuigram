@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(find /Users/SangNguyen/go/pkg/mod/github.com/gotd/td@v0.144.0 -type f -name \"*.go\" | grep -i \"message/sender\" | head -20)",
+      "Read(//Users/SangNguyen/go/pkg/mod/github.com/gotd/td@v0.144.0/**)",
+      "Bash(ls /Users/SangNguyen/go/pkg/mod/github.com/gotd/td@v0.144.0/telegram/message/ 2>/dev/null || echo \"not found\")",
+      "Read(//Users/SangNguyen/go/pkg/mod/github.com/gotd/td@v0.144.0/telegram/message/**)",
+      "Bash(grep -n \"func Matches\\\\|func.*Matches\" /Users/SangNguyen/go/pkg/mod/github.com/charmbracelet/bubbles@v1.0.0/key/key.go 2>/dev/null | head -10)",
+      "Read(//Users/SangNguyen/go/pkg/mod/github.com/charmbracelet/bubbles@v1.0.0/key/**)",
+      "Bash(go vet *)",
+      "Bash(ls /Users/SangNguyen/go/pkg/mod/github.com/gotd/ 2>/dev/null | head -20)",
+      "Read(//Users/SangNguyen/go/pkg/mod/github.com/gotd/**)",
+      "Bash(find /Users/SangNguyen/go/pkg/mod/github.com/charmbracelet/bubbles@v1.0.0/help/ -type f | head -10)",
+      "Read(//Users/SangNguyen/go/pkg/mod/github.com/charmbracelet/bubbles@v1.0.0/help/**)",
+      "Bash(find /Users/SangNguyen/go/pkg/mod/github.com/charmbracelet/lipgloss@v1.1.0/ -name \"*.go\" -not -path \"*_test*\" | head -20)",
+      "Read(//Users/SangNguyen/go/pkg/mod/github.com/charmbracelet/lipgloss@v1.1.0/**)"
+    ]
+  }
+}
