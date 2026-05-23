@@ -10,6 +10,7 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout scm
+                sh 'git fetch --tags'
             }
         }
 
@@ -34,7 +35,10 @@ pipeline {
 
         stage('Release') {
             when {
-                tag pattern: 'v\\d+\\.\\d+\\.\\d+.*', comparator: 'REGEXP'
+                expression {
+                    def tag = sh(returnStdout: true, script: 'git tag --points-at HEAD').trim()
+                    return tag ==~ /v\d+\.\d+\.\d+.*/
+                }
             }
             steps {
                 sh 'goreleaser release --clean'
