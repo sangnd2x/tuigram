@@ -55,20 +55,20 @@ pipeline {
             cleanWs()
         }
         success {
-            sh """
-                curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-                    -d chat_id="${TELEGRAM_CHAT_ID}" \
+            sh '''
+                curl -s -X POST "https://api.telegram.org/bot''' + env.TELEGRAM_BOT_TOKEN + '''/sendMessage" \
+                    -d chat_id="''' + env.TELEGRAM_CHAT_ID + '''" \
                     -d parse_mode="Markdown" \
-                    -d text="✅ *expense-tracker deployed*%0ARepo: ${env.JOB_NAME}%0ABranch: ${env.GIT_BRANCH}%0ACommit: ${env.GIT_COMMIT.take(7)}%0AView run: ${env.BUILD_URL}"
-            """
+                    -d text="✅ *tuigram build succeeded*%0ARepo: ''' + env.JOB_NAME + '''%0ABranch: ''' + env.GIT_BRANCH + '''%0ACommit: ''' + env.GIT_COMMIT.take(7) + '''%0AView run: ''' + env.BUILD_URL + '''"
+            '''
         }
         failure {
-            sh """
-                curl -s -X POST "https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage" \
-                    -d chat_id="${TELEGRAM_CHAT_ID}" \
+            sh '''
+                curl -s -X POST "https://api.telegram.org/bot''' + env.TELEGRAM_BOT_TOKEN + '''/sendMessage" \
+                    -d chat_id="''' + env.TELEGRAM_CHAT_ID + '''" \
                     -d parse_mode="Markdown" \
-                    -d text="❌ *expense-tracker deploy failed*%0ARepo: ${env.JOB_NAME}%0ABranch: ${env.GIT_BRANCH}%0ACommit: ${env.GIT_COMMIT.take(7)}%0AView run: ${env.BUILD_URL}"
-            """
+                    -d text="❌ *tuigram build failed*%0ARepo: ''' + env.JOB_NAME + '''%0ABranch: ''' + env.GIT_BRANCH + '''%0ACommit: ''' + env.GIT_COMMIT.take(7) + '''%0AView run: ''' + env.BUILD_URL + '''"
+            '''
         }
     }
 }
