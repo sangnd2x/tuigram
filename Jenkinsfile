@@ -3,8 +3,8 @@ pipeline {
 
     environment {
         GITHUB_TOKEN        = credentials('tuigram-github-token')
-        TELEGRAM_BOT_TOKEN  = credentials('telegram-bot-token')
-        TELEGRAM_CHAT_ID    = credentials('telegram-chat-id')
+        TELEGRAM_BOT_TOKEN    = credentials('TELEGRAM_BOT_TOKEN')
+        TELEGRAM_CHAT_ID      = credentials('TELEGRAM_CHAT_ID')
         PATH                = "/usr/local/go/bin:${env.PATH}"
     }
 
