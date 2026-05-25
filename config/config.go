@@ -11,6 +11,7 @@ import (
 type Config struct {
 	APIID   int    `toml:"api_id"`
 	APIHash string `toml:"api_hash"`
+	Phone   string `toml:"phone,omitempty"`
 }
 
 func Load(path string) (*Config, error) {
@@ -36,6 +37,19 @@ func Save(path string, cfg *Config) error {
 	return toml.NewEncoder(f).Encode(cfg)
 }
 
+func ensurePhone(path string, cfg *Config) error {
+	if cfg.Phone == "" {
+		fmt.Print("Enter your phone number (with country code, e.g. +1234567890): ")
+		if _, err := fmt.Scan(&cfg.Phone); err != nil {
+			return fmt.Errorf("reading phone: %w", err)
+		}
+		if err := Save(path, cfg); err != nil {
+			return fmt.Errorf("saving config: %w", err)
+		}
+	}
+	return nil
+}
+
 func LoadOrCreate(path string) (*Config, error) {
 	if _, err := os.Stat(path); os.IsNotExist(err) {
 		fmt.Println("No config file found. Creating one at:", path)
@@ -49,11 +63,22 @@ func LoadOrCreate(path string) (*Config, error) {
 		if _, err := fmt.Scan(&cfg.APIHash); err != nil {
 			return nil, fmt.Errorf("reading api_hash: %w", err)
 		}
+		fmt.Print("Enter your phone number (with country code, e.g. +1234567890): ")
+		if _, err := fmt.Scan(&cfg.Phone); err != nil {
+			return nil, fmt.Errorf("reading phone: %w", err)
+		}
 		if err := Save(path, &cfg); err != nil {
 			return nil, fmt.Errorf("saving config: %w", err)
 		}
 		fmt.Println("Config saved to", path)
 		return &cfg, nil
 	}
-	return Load(path)
+	cfg, err := Load(path)
+	if err != nil {
+		return nil, err
+	}
+	if err := ensurePhone(path, cfg); err != nil {
+		return nil, err
+	}
+	return cfg, nil
 }

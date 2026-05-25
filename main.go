@@ -23,12 +23,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	phone, err := appauth.PromptPhone()
-	if err != nil {
-		fmt.Fprintln(os.Stderr, "Error reading phone:", err)
-		os.Exit(1)
-	}
-
 	sessionPath := filepath.Join(xdg.DataDir(), "session.json")
 	if err := os.MkdirAll(filepath.Dir(sessionPath), 0700); err != nil {
 		fmt.Fprintln(os.Stderr, "Error creating data dir:", err)
@@ -45,7 +39,7 @@ func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	defer cancel()
 
-	if err := client.Run(ctx, appauth.New(phone), func(ctx context.Context) error {
+	if err := client.Run(ctx, appauth.New(cfg.Phone), func(ctx context.Context) error {
 		p := tea.NewProgram(ui.New(client, ctx), tea.WithAltScreen())
 		bridge.SetProgram(p)
 		_, err := p.Run()
