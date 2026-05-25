@@ -18,13 +18,6 @@ func New(phone string) *Authenticator {
 	return &Authenticator{phone: phone}
 }
 
-func PromptPhone() (string, error) {
-	fmt.Print("Enter your phone number (with country code, e.g. +1234567890): ")
-	var phone string
-	_, err := fmt.Scan(&phone)
-	return phone, err
-}
-
 func (a *Authenticator) Phone(_ context.Context) (string, error) {
 	return a.phone, nil
 }
